@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RPSDroid</string>
+    <string name="splash_screen_logo">splash_screen_logo</string>
+    <string name="npc_play_image">npc_play_image</string>
+    <string name="own_play_image">own_play_image</string>
+    <string name="win">You won</string>
+    <string name="lose">You lost</string>
+    <string name="draw">It was a draw</string>
 </resources>

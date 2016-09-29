@@ -16,6 +16,7 @@
         android:src="@drawable/rps_logo"
         android:id="@+id/imgLogo"
         android:layout_width="280dp"
-        android:layout_height="280dp" />
+        android:layout_height="280dp"
+        android:contentDescription="@string/splash_screen_logo" />
 
 </RelativeLayout>
