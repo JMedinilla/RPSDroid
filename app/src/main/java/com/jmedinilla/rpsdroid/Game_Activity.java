@@ -8,8 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
+import android.widget.TextView;
 import java.util.Random;
 
 public class Game_Activity extends AppCompatActivity {
@@ -19,6 +18,7 @@ public class Game_Activity extends AppCompatActivity {
     private Button btnRock;
     private Button btnPaper;
     private Button btnScissors;
+    private TextView txtMessageBoard;
 
     private static final int ROCK_CHOICE = 1;
     private static final int PAPER_CHOICE = 2;
@@ -42,6 +42,7 @@ public class Game_Activity extends AppCompatActivity {
 
         cpuPlay.setVisibility(View.INVISIBLE);
         ownPlay.setVisibility(View.INVISIBLE);
+        txtMessageBoard.setVisibility(View.INVISIBLE);
 
         switch (view.getId()) {
             case R.id.btnRock:
@@ -64,22 +65,21 @@ public class Game_Activity extends AppCompatActivity {
         animatePlay();
     }
 
-    private void sendToast(String message) {
-        Toast.makeText(Game_Activity.this, message, Toast.LENGTH_SHORT).show();
-    }
-
     private void lose() {
         cpuPoints++;
-        sendToast(getResources().getString(R.string.lose));
+        String msg = getString(R.string.lose) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
+        txtMessageBoard.setText(msg);
     }
 
     private void win() {
         ownPoints++;
-        sendToast(getResources().getString(R.string.win));
+        String msg = getString(R.string.win) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
+        txtMessageBoard.setText(msg);
     }
 
     private void draw() {
-        sendToast(getResources().getString(R.string.draw));
+        String msg = getString(R.string.draw) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
+        txtMessageBoard.setText(msg);
     }
 
     private void generatePlay() {
@@ -123,6 +123,7 @@ public class Game_Activity extends AppCompatActivity {
     private void animatePlay() {
         cpuPlay.setVisibility(View.VISIBLE);
         ownPlay.setVisibility(View.VISIBLE);
+        txtMessageBoard.setVisibility(View.VISIBLE);
 
         btnRock.setEnabled(false);
         btnPaper.setEnabled(false);
@@ -130,8 +131,10 @@ public class Game_Activity extends AppCompatActivity {
 
         Animation npc_play_animation = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.right_move);
         Animation own_play_animation = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.left_move);
+        Animation board_animation = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.board_move);
         cpuPlay.setAnimation(npc_play_animation);
         ownPlay.setAnimation(own_play_animation);
+        txtMessageBoard.setAnimation(board_animation);
 
         Handler handler = new Handler();
         int DISABLE_DURATION_MS = 800;
@@ -152,6 +155,11 @@ public class Game_Activity extends AppCompatActivity {
         btnRock = (Button)findViewById(R.id.btnRock);
         btnPaper = (Button)findViewById(R.id.btnPaper);
         btnScissors = (Button)findViewById(R.id.btnScissors);
+
+        txtMessageBoard = (TextView)findViewById(R.id.txtMessageBoard);
+        if (txtMessageBoard != null) {
+            txtMessageBoard.setVisibility(View.INVISIBLE);
+        }
 
         ownChoice = 0;
         cpuPoints = 0;

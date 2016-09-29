@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RPSDroid</string>
+    <string name="draw">¡Empate!</string>
+    <string name="lose">¡Derrota!</string>
+    <string name="win">¡Victoria!</string>
+    <string name="splash_screen_logo">splash_screen_logo</string>
+    <string name="own_play_image">own_play_image</string>
+    <string name="npc_play_image">npc_play_image</string>
+    <string name="you">TÚ</string>
+</resources>
