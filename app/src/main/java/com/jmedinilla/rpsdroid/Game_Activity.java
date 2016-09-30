@@ -20,9 +20,9 @@ public class Game_Activity extends AppCompatActivity {
     private Button btnScissors;
     private TextView txtMessageBoard;
 
-    private static final int ROCK_CHOICE = 1;
-    private static final int PAPER_CHOICE = 2;
-    private static final int SCISSORS_CHOICE = 3;
+    private static final int ROCK_CHOICE = 0;
+    private static final int PAPER_CHOICE = 1;
+    private static final int SCISSORS_CHOICE = 2;
 
     private int ownChoice;
     private int cpuPoints;
@@ -84,7 +84,7 @@ public class Game_Activity extends AppCompatActivity {
 
     private void generatePlay() {
         Random rnd = new Random();
-        int cpuChoice = (rnd.nextInt(3 - 1) + 1);
+        int cpuChoice = rnd.nextInt(3);
 
         if (cpuChoice == ROCK_CHOICE) {
             cpuPlay.setImageResource(R.drawable.rock);
