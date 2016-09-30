@@ -13,6 +13,7 @@ import java.util.Random;
 
 public class Game_Activity extends AppCompatActivity {
 
+    //View components
     private ImageView cpuPlay;
     private ImageView ownPlay;
     private Button btnRock;
@@ -20,33 +21,50 @@ public class Game_Activity extends AppCompatActivity {
     private Button btnScissors;
     private TextView txtMessageBoard;
 
+    //Final variables
     private static final int ROCK_CHOICE = 0;
     private static final int PAPER_CHOICE = 1;
     private static final int SCISSORS_CHOICE = 2;
 
-    private int cpuChoice;
-    private int ownChoice;
-    private int cpuPoints;
-    private int ownPoints;
-    private int ownWinsARow;
-    private int cpuWinsARow;
+    //Variables used in the plays
+    private int cpuChoice; //What the CPU plays
+    private int ownChoice; //What the player plays
+    private int cpuPoints; //The points that the CPU has
+    private int ownPoints; //The points that the user has
+    private int ownWinsARow; //The times the player win in a row
+    private int cpuWinsARow; //The times the CPU win in a row
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        /*
+        First, all the components must to be initialized
+        and then, execute the animation of the ImageViews
+        and the buttons at the botton of the screen
+         */
         initialize();
         animatePlay();
         animateButtons();
     }
 
+    /**
+     * Method executed when the player use a button
+     * @param view Component of the view
+     */
     public void getOnClick(View view) {
 
+        /*
+        If the player touch a button, the ImageViews and the
+        TextView go invisible, so they can execute the animations
+        the next time the Activity draws them
+         */
         cpuPlay.setVisibility(View.INVISIBLE);
         ownPlay.setVisibility(View.INVISIBLE);
         txtMessageBoard.setVisibility(View.INVISIBLE);
 
+        //The player ImageView loads a different image for each button
         switch (view.getId()) {
             case R.id.btnRock:
                 ownPlay.setImageResource(R.drawable.rock);
@@ -64,10 +82,19 @@ public class Game_Activity extends AppCompatActivity {
                 break;
         }
 
+        /*
+        When the player decides what to play, it is time for
+        the CPU to do it and execute the animation
+         */
         generatePlay();
         animatePlay();
     }
 
+    /**
+     * Method executed when the player lose a game
+     * It adds a point to the CPU and create the
+     * text the TextView has to show
+     */
     private void lose() {
         cpuPoints++;
         ownWinsARow = 0;
@@ -77,6 +104,11 @@ public class Game_Activity extends AppCompatActivity {
         txtMessageBoard.setText(msg);
     }
 
+    /*
+     * Method executed when the player win a game
+     * It adds a point to the player and create the
+     * text the TextView has to show
+     */
     private void win() {
         ownPoints++;
         ownWinsARow++;
@@ -86,15 +118,27 @@ public class Game_Activity extends AppCompatActivity {
         txtMessageBoard.setText(msg);
     }
 
+    /*
+     * Method executed when there's a draw
+     * create the text the TextView has to show
+     */
     private void draw() {
         String msg = getString(R.string.draw) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
         txtMessageBoard.setText(msg);
     }
 
+    /**
+     * Method implemented to decide the play of the
+     * CPU and the winner of the match
+     */
     private void generatePlay() {
         Random rnd = new Random();
 
-        if (ownWinsARow >= 5) {
+        /*
+        If the player wins 5 times in a row, the next match
+        is an automatic victory for the CPU
+         */
+        if (ownWinsARow == 5) {
             if (ownChoice == ROCK_CHOICE) {
                 cpuChoice = PAPER_CHOICE;
             }
@@ -105,6 +149,10 @@ public class Game_Activity extends AppCompatActivity {
                 cpuChoice = ROCK_CHOICE;
             }
         }
+        /*
+        If the player wins 3 or 4 times in a row, the CPU has a
+        50% chance of winning the next match
+         */
         else if (ownWinsARow >= 3 && rnd.nextInt(2) == 0) {
             if (ownChoice == ROCK_CHOICE) {
                 cpuChoice = PAPER_CHOICE;
@@ -116,11 +164,11 @@ public class Game_Activity extends AppCompatActivity {
                 cpuChoice = ROCK_CHOICE;
             }
         }
-        else {
-            cpuChoice = rnd.nextInt(3);
-        }
-
-        if (cpuWinsARow >= 5) {
+        /*
+        If the CPU wins 5 times in a row, the next match
+        is an automatic victory for the player
+         */
+        else if (cpuWinsARow >= 5) {
             if (ownChoice == ROCK_CHOICE) {
                 cpuChoice = SCISSORS_CHOICE;
             }
@@ -131,6 +179,10 @@ public class Game_Activity extends AppCompatActivity {
                 cpuChoice = PAPER_CHOICE;
             }
         }
+        /*
+        If the CPU wins 3 or 4 times in a row, the player has a
+        50% chance of winning the next match
+         */
         else if (cpuWinsARow >= 3 && rnd.nextInt(2) == 0) {
             if (ownChoice == ROCK_CHOICE) {
                 cpuChoice = SCISSORS_CHOICE;
@@ -142,10 +194,15 @@ public class Game_Activity extends AppCompatActivity {
                 cpuChoice = PAPER_CHOICE;
             }
         }
+        /*
+        Otherwise, the CPU execute a random to decide
+        what is it going to play
+         */
         else {
             cpuChoice = rnd.nextInt(3);
         }
 
+        //An image is assigned to the CPU ImageView
         if (cpuChoice == ROCK_CHOICE) {
             cpuPlay.setImageResource(R.drawable.rock);
         }else if (cpuChoice == PAPER_CHOICE) {
@@ -154,6 +211,7 @@ public class Game_Activity extends AppCompatActivity {
             cpuPlay.setImageResource(R.drawable.scissors);
         }
 
+        //Rules
         if (ownChoice == cpuChoice) {
             draw();
         }else if (ownChoice == ROCK_CHOICE && cpuChoice == PAPER_CHOICE) {
@@ -171,6 +229,10 @@ public class Game_Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method implemented to create and use the animation
+     * assigned to the buttons at the beginning
+     */
     private void animateButtons() {
         Animation btn_rock_anim = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.rock_animation);
         Animation btn_paper_anim = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.paper_animation);
@@ -180,11 +242,20 @@ public class Game_Activity extends AppCompatActivity {
         btnScissors.setAnimation(btn_scissors_anim);
     }
 
+    /**
+     * Method implemented to create and use the animations for
+     * the components that show the play of each player and
+     * the points they have
+     */
     private void animatePlay() {
         cpuPlay.setVisibility(View.VISIBLE);
         ownPlay.setVisibility(View.VISIBLE);
         txtMessageBoard.setVisibility(View.VISIBLE);
 
+        /*
+        The first thing to do is disable the buttons so the
+        player can't touch them while the screes is moving
+         */
         btnRock.setEnabled(false);
         btnPaper.setEnabled(false);
         btnScissors.setEnabled(false);
@@ -196,6 +267,10 @@ public class Game_Activity extends AppCompatActivity {
         ownPlay.setAnimation(own_play_animation);
         txtMessageBoard.setAnimation(board_animation);
 
+        /*
+        After 800ms, less than a second, the buttons are
+        available again to play
+         */
         Handler handler = new Handler();
         int DISABLE_DURATION_MS = 800;
         handler.postDelayed(new Runnable() {
@@ -208,18 +283,17 @@ public class Game_Activity extends AppCompatActivity {
         }, DISABLE_DURATION_MS);
     }
 
+    /**
+     * Method that initialize all of the variables
+     * and components of the view
+     */
     private void initialize() {
         cpuPlay = (ImageView)findViewById(R.id.npcPlay);
         ownPlay = (ImageView)findViewById(R.id.ownPlay);
-
         btnRock = (Button)findViewById(R.id.btnRock);
         btnPaper = (Button)findViewById(R.id.btnPaper);
         btnScissors = (Button)findViewById(R.id.btnScissors);
-
         txtMessageBoard = (TextView)findViewById(R.id.txtMessageBoard);
-        if (txtMessageBoard != null) {
-            txtMessageBoard.setVisibility(View.INVISIBLE);
-        }
 
         cpuChoice = 0;
         ownChoice = 0;
