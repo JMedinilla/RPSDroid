@@ -24,9 +24,12 @@ public class Game_Activity extends AppCompatActivity {
     private static final int PAPER_CHOICE = 1;
     private static final int SCISSORS_CHOICE = 2;
 
+    private int cpuChoice;
     private int ownChoice;
     private int cpuPoints;
     private int ownPoints;
+    private int ownWinsARow;
+    private int cpuWinsARow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +70,18 @@ public class Game_Activity extends AppCompatActivity {
 
     private void lose() {
         cpuPoints++;
+        ownWinsARow = 0;
+        cpuWinsARow++;
+
         String msg = getString(R.string.lose) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
         txtMessageBoard.setText(msg);
     }
 
     private void win() {
         ownPoints++;
+        ownWinsARow++;
+        cpuWinsARow = 0;
+
         String msg = getString(R.string.win) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
         txtMessageBoard.setText(msg);
     }
@@ -84,7 +93,58 @@ public class Game_Activity extends AppCompatActivity {
 
     private void generatePlay() {
         Random rnd = new Random();
-        int cpuChoice = rnd.nextInt(3);
+
+        if (ownWinsARow >= 5) {
+            if (ownChoice == ROCK_CHOICE) {
+                cpuChoice = PAPER_CHOICE;
+            }
+            else if (ownChoice == PAPER_CHOICE) {
+                cpuChoice = SCISSORS_CHOICE;
+            }
+            else {
+                cpuChoice = ROCK_CHOICE;
+            }
+        }
+        else if (ownWinsARow >= 3 && rnd.nextInt(2) == 0) {
+            if (ownChoice == ROCK_CHOICE) {
+                cpuChoice = PAPER_CHOICE;
+            }
+            else if (ownChoice == PAPER_CHOICE) {
+                cpuChoice = SCISSORS_CHOICE;
+            }
+            else {
+                cpuChoice = ROCK_CHOICE;
+            }
+        }
+        else {
+            cpuChoice = rnd.nextInt(3);
+        }
+
+        if (cpuWinsARow >= 5) {
+            if (ownChoice == ROCK_CHOICE) {
+                cpuChoice = SCISSORS_CHOICE;
+            }
+            else if (ownChoice == PAPER_CHOICE) {
+                cpuChoice = ROCK_CHOICE;
+            }
+            else {
+                cpuChoice = PAPER_CHOICE;
+            }
+        }
+        else if (cpuWinsARow >= 3 && rnd.nextInt(2) == 0) {
+            if (ownChoice == ROCK_CHOICE) {
+                cpuChoice = SCISSORS_CHOICE;
+            }
+            else if (ownChoice == PAPER_CHOICE) {
+                cpuChoice = ROCK_CHOICE;
+            }
+            else {
+                cpuChoice = PAPER_CHOICE;
+            }
+        }
+        else {
+            cpuChoice = rnd.nextInt(3);
+        }
 
         if (cpuChoice == ROCK_CHOICE) {
             cpuPlay.setImageResource(R.drawable.rock);
@@ -161,8 +221,11 @@ public class Game_Activity extends AppCompatActivity {
             txtMessageBoard.setVisibility(View.INVISIBLE);
         }
 
+        cpuChoice = 0;
         ownChoice = 0;
         cpuPoints = 0;
         ownPoints = 0;
+        ownWinsARow = 0;
+        cpuWinsARow = 0;
     }
 }
