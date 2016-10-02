@@ -7,4 +7,9 @@
     <string name="lose">Lose!</string>
     <string name="draw">Draw!</string>
     <string name="you">YOU</string>
+    <string name="coin_icon">coin_icon</string>
+    <string name="classic_icon_button">classic_icon_button</string>
+    <string name="special_icon_button">special_icon_button</string>
+    <string name="menu_classicButton">Classic Mode</string>
+    <string name="menu_specialButton">Special Mode</string>
 </resources>

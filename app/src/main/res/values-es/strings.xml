@@ -8,4 +8,5 @@
     <string name="own_play_image">own_play_image</string>
     <string name="npc_play_image">npc_play_image</string>
     <string name="you">TÚ</string>
+    <string name="coin_icon">coin_icon</string>
 </resources>

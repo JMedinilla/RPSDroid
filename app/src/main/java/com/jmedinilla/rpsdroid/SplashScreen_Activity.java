@@ -19,7 +19,7 @@ public class SplashScreen_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         //Animation that moves the logo from the top to the center
-        Animation animation = AnimationUtils.loadAnimation(SplashScreen_Activity.this, R.anim.logo_move);
+        Animation animation = AnimationUtils.loadAnimation(SplashScreen_Activity.this, R.anim.splash_logo_move);
 
         ImageView imgLogo = (ImageView) findViewById(R.id.imgLogo);
         if (imgLogo != null) {
@@ -34,7 +34,7 @@ public class SplashScreen_Activity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen_Activity.this, Game_Activity.class));
+                startActivity(new Intent(SplashScreen_Activity.this, MenuMode_Activity.class));
                 finish();
             }
         }, SPLASH_DURATION_MS);

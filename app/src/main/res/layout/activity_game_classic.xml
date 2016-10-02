@@ -10,14 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center"
     android:background="@color/colorPrimaryDark"
-    tools:context="com.jmedinilla.rpsdroid.Game_Activity">
+    tools:context="com.jmedinilla.rpsdroid.ClassicGame_Activity">
 
     <ImageView
         android:layout_centerHorizontal="true"
         android:src="@drawable/placeholder"
         android:id="@+id/npcPlay"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:contentDescription="@string/npc_play_image" />
 
     <ImageView
@@ -26,16 +26,57 @@
         android:src="@drawable/placeholder"
         android:id="@+id/ownPlay"
         android:layout_below="@+id/npcPlay"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:contentDescription="@string/own_play_image" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/info_layout"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ownPlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:id="@+id/txtMessageBoard"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_width="210dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/txtCoin"
+            android:gravity="center"
+            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:onClick="getOnClickClassicImage"
+            android:id="@+id/imgCoin"
+            android:src="@drawable/money_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/coin_icon" />
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/btn_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:layout_below="@+id/txtMessageBoard"
+        android:layout_below="@+id/info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -47,7 +88,7 @@
             android:id="@+id/btnRock"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:onClick="getOnClick" />
+            android:onClick="getOnClickClassicButton" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
@@ -57,7 +98,7 @@
             android:id="@+id/btnPaper"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:onClick="getOnClick" />
+            android:onClick="getOnClickClassicButton" />
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
@@ -67,20 +108,7 @@
             android:id="@+id/btnScissors"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:onClick="getOnClick" />
+            android:onClick="getOnClickClassicButton" />
     </LinearLayout>
-
-    <TextView
-        android:gravity="center"
-        android:background="@color/colorPrimary"
-        android:id="@+id/txtMessageBoard"
-        android:layout_marginTop="20dp"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/ownPlay"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

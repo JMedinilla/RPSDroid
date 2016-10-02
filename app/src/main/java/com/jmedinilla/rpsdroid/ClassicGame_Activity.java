@@ -1,5 +1,6 @@
 package com.jmedinilla.rpsdroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.Random;
 
-public class Game_Activity extends AppCompatActivity {
+public class ClassicGame_Activity extends AppCompatActivity {
 
     //View components
     private ImageView cpuPlay;
     private ImageView ownPlay;
+    private ImageView imgCoin;
     private Button btnRock;
     private Button btnPaper;
     private Button btnScissors;
     private TextView txtMessageBoard;
+    private TextView txtCoin;
 
     //Final variables
     private static final int ROCK_CHOICE = 0;
@@ -33,11 +36,12 @@ public class Game_Activity extends AppCompatActivity {
     private int ownPoints; //The points that the user has
     private int ownWinsARow; //The times the player win in a row
     private int cpuWinsARow; //The times the CPU win in a row
+    private int coinCount; //The coins the player has
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_game_classic);
 
         /*
         First, all the components must to be initialized
@@ -53,7 +57,7 @@ public class Game_Activity extends AppCompatActivity {
      * Method executed when the player use a button
      * @param view Component of the view
      */
-    public void getOnClick(View view) {
+    public void getOnClickClassicButton(View view) {
 
         /*
         If the player touch a button, the ImageViews and the
@@ -91,38 +95,68 @@ public class Game_Activity extends AppCompatActivity {
     }
 
     /**
+     * Method executed when the player use the coin button
+     * @param view Component of the view
+     */
+    public void getOnClickClassicImage(View view) {
+        switch (view.getId()) {
+            case R.id.imgCoin:
+                startActivity(new Intent(ClassicGame_Activity.this, ShopGame_Activity.class));
+                break;
+        }
+    }
+
+    /**
      * Method executed when the player lose a game
      * It adds a point to the CPU and create the
      * text the TextView has to show
+     * Also modifies the coins
      */
     private void lose() {
         cpuPoints++;
         ownWinsARow = 0;
         cpuWinsARow++;
 
+        if (coinCount > 0) {
+            coinCount--;
+        }
+
         String msg = getString(R.string.lose) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
         txtMessageBoard.setText(msg);
     }
 
-    /*
+    /**
      * Method executed when the player win a game
      * It adds a point to the player and create the
      * text the TextView has to show
+     * Also modifies the coins
      */
     private void win() {
         ownPoints++;
         ownWinsARow++;
         cpuWinsARow = 0;
 
+        if (ownWinsARow == 0 || ownWinsARow == 1) {
+            coinCount++;
+        }
+        else if (ownWinsARow == 2 || ownWinsARow == 3) {
+            coinCount += 3;
+        }
+        else if (ownWinsARow >= 4) {
+            coinCount += 5;
+        }
+
         String msg = getString(R.string.win) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
         txtMessageBoard.setText(msg);
     }
 
-    /*
+    /**
      * Method executed when there's a draw
      * create the text the TextView has to show
      */
     private void draw() {
+        ownWinsARow = 0;
+        cpuWinsARow = 0;
         String msg = getString(R.string.draw) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
         txtMessageBoard.setText(msg);
     }
@@ -227,6 +261,8 @@ public class Game_Activity extends AppCompatActivity {
         }else if (ownChoice == SCISSORS_CHOICE && cpuChoice == PAPER_CHOICE) {
             win();
         }
+
+        txtCoin.setText(String.valueOf(coinCount));
     }
 
     /**
@@ -234,12 +270,16 @@ public class Game_Activity extends AppCompatActivity {
      * assigned to the buttons at the beginning
      */
     private void animateButtons() {
-        Animation btn_rock_anim = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.rock_animation);
-        Animation btn_paper_anim = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.paper_animation);
-        Animation btn_scissors_anim = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.scissors_animation);
+        Animation btn_rock_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_rock_animation);
+        Animation btn_paper_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_paper_animation);
+        Animation btn_scissors_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_scissors_animation);
+        Animation text_money_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_coin_animation_text);
+        Animation icon_money_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_coin_animation);
         btnRock.setAnimation(btn_rock_anim);
         btnPaper.setAnimation(btn_paper_anim);
         btnScissors.setAnimation(btn_scissors_anim);
+        imgCoin.setAnimation(icon_money_anim);
+        txtCoin.setAnimation(text_money_anim);
     }
 
     /**
@@ -259,10 +299,11 @@ public class Game_Activity extends AppCompatActivity {
         btnRock.setEnabled(false);
         btnPaper.setEnabled(false);
         btnScissors.setEnabled(false);
+        imgCoin.setEnabled(false);
 
-        Animation npc_play_animation = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.right_move);
-        Animation own_play_animation = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.left_move);
-        Animation board_animation = AnimationUtils.loadAnimation(Game_Activity.this, R.anim.board_move);
+        Animation npc_play_animation = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_right_move);
+        Animation own_play_animation = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_left_move);
+        Animation board_animation = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_board_move);
         cpuPlay.setAnimation(npc_play_animation);
         ownPlay.setAnimation(own_play_animation);
         txtMessageBoard.setAnimation(board_animation);
@@ -279,6 +320,7 @@ public class Game_Activity extends AppCompatActivity {
                 btnRock.setEnabled(true);
                 btnPaper.setEnabled(true);
                 btnScissors.setEnabled(true);
+                imgCoin.setEnabled(true);
             }
         }, DISABLE_DURATION_MS);
     }
@@ -290,10 +332,12 @@ public class Game_Activity extends AppCompatActivity {
     private void initialize() {
         cpuPlay = (ImageView)findViewById(R.id.npcPlay);
         ownPlay = (ImageView)findViewById(R.id.ownPlay);
+        imgCoin = (ImageView)findViewById(R.id.imgCoin);
         btnRock = (Button)findViewById(R.id.btnRock);
         btnPaper = (Button)findViewById(R.id.btnPaper);
         btnScissors = (Button)findViewById(R.id.btnScissors);
         txtMessageBoard = (TextView)findViewById(R.id.txtMessageBoard);
+        txtCoin = (TextView)findViewById(R.id.txtCoin);
 
         cpuChoice = 0;
         ownChoice = 0;
@@ -301,5 +345,8 @@ public class Game_Activity extends AppCompatActivity {
         ownPoints = 0;
         ownWinsARow = 0;
         cpuWinsARow = 0;
+        coinCount = 0;
+
+        txtCoin.setText(String.valueOf(coinCount));
     }
 }

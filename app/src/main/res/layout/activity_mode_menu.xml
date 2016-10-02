@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_mode_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.jmedinilla.rpsdroid.MenuMode_Activity">
+
+    <LinearLayout
+        android:id="@+id/menu_layout_classic"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/app_icon"
+            android:id="@+id/imgMenuClassic"
+            android:layout_weight="1"
+            android:contentDescription="@string/classic_icon_button" />
+
+        <Button
+            android:textSize="16sp"
+            android:onClick="getOnClickMenuButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/menu_classicButton"
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:id="@+id/btnMenuClassic"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:id="@+id/menu_layout_special"
+        android:layout_below="@+id/menu_layout_classic"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/placeholder"
+            android:id="@+id/imgMenuSpecial"
+            android:layout_weight="1"
+            android:contentDescription="@string/special_icon_button" />
+
+        <Button
+            android:textSize="16sp"
+            android:onClick="getOnClickMenuButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/menu_specialButton"
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:id="@+id/btnMenuSpecial"
+            android:layout_weight="1" />
+    </LinearLayout>
+</RelativeLayout>
