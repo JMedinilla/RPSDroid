@@ -49,6 +49,12 @@ public class ClassicGame_Activity extends AppCompatActivity {
         and the buttons at the botton of the screen
          */
         initialize();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         animatePlay();
         animateButtons();
     }
@@ -172,7 +178,7 @@ public class ClassicGame_Activity extends AppCompatActivity {
         If the player wins 5 times in a row, the next match
         is an automatic victory for the CPU
          */
-        if (ownWinsARow == 5) {
+        if (ownWinsARow == 6) {
             if (ownChoice == ROCK_CHOICE) {
                 cpuChoice = PAPER_CHOICE;
             }
@@ -187,7 +193,7 @@ public class ClassicGame_Activity extends AppCompatActivity {
         If the player wins 3 or 4 times in a row, the CPU has a
         50% chance of winning the next match
          */
-        else if (ownWinsARow >= 3 && rnd.nextInt(2) == 0) {
+        else if (ownWinsARow >= 4 && rnd.nextInt(2) == 0) {
             if (ownChoice == ROCK_CHOICE) {
                 cpuChoice = PAPER_CHOICE;
             }
@@ -273,11 +279,14 @@ public class ClassicGame_Activity extends AppCompatActivity {
         Animation btn_rock_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_rock_animation);
         Animation btn_paper_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_paper_animation);
         Animation btn_scissors_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_scissors_animation);
+
         Animation text_money_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_coin_animation_text);
         Animation icon_money_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_coin_animation);
+
         btnRock.setAnimation(btn_rock_anim);
         btnPaper.setAnimation(btn_paper_anim);
         btnScissors.setAnimation(btn_scissors_anim);
+
         imgCoin.setAnimation(icon_money_anim);
         txtCoin.setAnimation(text_money_anim);
     }

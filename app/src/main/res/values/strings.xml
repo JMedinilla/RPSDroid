@@ -12,4 +12,8 @@
     <string name="special_icon_button">special_icon_button</string>
     <string name="menu_classicButton">Classic Mode</string>
     <string name="menu_specialButton">Special Mode</string>
+    <string name="btnChangeColor">Change color</string>
+    <string name="txtChangeColor">10</string>
+    <string name="img_shop_changecolor">img_shop_changecolor</string>
+    <string name="img_shop_changecolor_coin">img_shop_changecolor_coin</string>
 </resources>
