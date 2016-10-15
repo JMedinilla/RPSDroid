@@ -31,6 +31,15 @@ public class ShopGame_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        /*
+        If the user pauses the App, executing it
+        again will also execute the animations
+
+        They have to go invisible first in order
+        to execute the animation, because it will
+        only be executed if it's the first time the
+        component is drawn in the screen
+         */
 
         layout_shop_changecolor.setVisibility(View.INVISIBLE);
         layout_shop_changecolor.setVisibility(View.VISIBLE);
@@ -51,6 +60,7 @@ public class ShopGame_Activity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        //Working...
                         Toast.makeText(ShopGame_Activity.this, "Not yet", Toast.LENGTH_SHORT).show();
                     }
                 }, 800);

@@ -32,6 +32,15 @@ public class MenuMode_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        /*
+        If the user pauses the App, executing it
+        again will also execute the animations
+
+        They have to go invisible first in order
+        to execute the animation, because it will
+        only be executed if it's the first time the
+        component is drawn in the screen
+         */
         layoutClassic.setVisibility(View.INVISIBLE);
         layoutSpecial.setVisibility(View.INVISIBLE);
 
@@ -40,7 +49,7 @@ public class MenuMode_Activity extends AppCompatActivity {
         btnClassic.setEnabled(true);
         btnSpecial.setEnabled(true);
 
-        //Animation that moves the buttons from the left to the center
+        //Animation that moves the buttons from left
         Animation classic_anim = AnimationUtils.loadAnimation(MenuMode_Activity.this, R.anim.menu_classic_animation);
         Animation special_anim = AnimationUtils.loadAnimation(MenuMode_Activity.this, R.anim.menu_special_animation);
         layoutClassic.setAnimation(classic_anim);
@@ -54,6 +63,12 @@ public class MenuMode_Activity extends AppCompatActivity {
         Handler handler = new Handler();
         Animation selected_move = AnimationUtils.loadAnimation(MenuMode_Activity.this, R.anim.menu_selected_animation);
         switch (view.getId()) {
+            /*
+            When the player selects an option, the order
+            one goes invisible, so he cant touch it while
+            the animation is happening
+             */
+
             case R.id.btnMenuClassic:
                 layoutSpecial.setVisibility(View.INVISIBLE);
                 layoutClassic.setAnimation(selected_move);

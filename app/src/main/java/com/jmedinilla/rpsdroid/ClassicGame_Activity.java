@@ -55,6 +55,10 @@ public class ClassicGame_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        /*
+        If the user pauses the App, executing it
+        again will also execute the animations
+         */
         animatePlay();
         animateButtons();
     }
@@ -143,13 +147,13 @@ public class ClassicGame_Activity extends AppCompatActivity {
         cpuWinsARow = 0;
 
         if (ownWinsARow == 0 || ownWinsARow == 1) {
-            coinCount++;
+            coinCount += 2;
         }
         else if (ownWinsARow == 2 || ownWinsARow == 3) {
-            coinCount += 3;
+            coinCount += 4;
         }
         else if (ownWinsARow >= 4) {
-            coinCount += 5;
+            coinCount += 6;
         }
 
         String msg = getString(R.string.win) + "\nCPU -> " + cpuPoints + "   -   " + getString(R.string.you) + " -> " + ownPoints;
@@ -175,7 +179,7 @@ public class ClassicGame_Activity extends AppCompatActivity {
         Random rnd = new Random();
 
         /*
-        If the player wins 5 times in a row, the next match
+        If the player wins 6 times in a row, the next match
         is an automatic victory for the CPU
          */
         if (ownWinsARow == 6) {
@@ -190,7 +194,7 @@ public class ClassicGame_Activity extends AppCompatActivity {
             }
         }
         /*
-        If the player wins 3 or 4 times in a row, the CPU has a
+        If the player wins 4 or 5 times in a row, the CPU has a
         50% chance of winning the next match
          */
         else if (ownWinsARow >= 4 && rnd.nextInt(2) == 0) {
@@ -235,7 +239,7 @@ public class ClassicGame_Activity extends AppCompatActivity {
             }
         }
         /*
-        Otherwise, the CPU execute a random to decide
+        Otherwise, the CPU executes a random to decide
         what is it going to play
          */
         else {
@@ -273,7 +277,7 @@ public class ClassicGame_Activity extends AppCompatActivity {
 
     /**
      * Method implemented to create and use the animation
-     * assigned to the buttons at the beginning
+     * assigned to the buttons
      */
     private void animateButtons() {
         Animation btn_rock_anim = AnimationUtils.loadAnimation(ClassicGame_Activity.this, R.anim.classic_rock_animation);
@@ -336,7 +340,7 @@ public class ClassicGame_Activity extends AppCompatActivity {
 
     /**
      * Method that initialize all of the variables
-     * and components of the view
+     * and components
      */
     private void initialize() {
         cpuPlay = (ImageView)findViewById(R.id.npcPlay);
